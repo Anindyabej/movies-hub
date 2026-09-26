@@ -21,25 +21,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-    --void:      #000000;
-    --deep:      #0a0a0a;
-    --surface:   #141414;
-    --elevated:  #1f1f1f;
-    --card:      #181818;
+    --void: #000000;
+    --deep: #0a0a0a;
+    --surface: #141414;
+    --elevated: #1f1f1f;
+    --card: #181818;
 
-    --line:      rgba(255, 255, 255, 0.09);
+    --line: rgba(255, 255, 255, 0.09);
     --line-soft: rgba(255, 255, 255, 0.05);
 
-    --ink:       #f5f5f5;
-    --ink-soft:  #d2d2d2;
-    --ink-mute:  #8c8c8c;
+    --ink: #f5f5f5;
+    --ink-soft: #d2d2d2;
+    --ink-mute: #8c8c8c;
 
-    --accent:      #e50914;
+    --accent: #e50914;
     --accent-soft: #ff4d5a;
     --accent-glow: rgba(229, 9, 20, 0.45);
     --accent-deep: #8b060e;
 
-    --imdb:     #f5c518;
+    --imdb: #f5c518;
     --imdb-ink: #0a0a0a;
 
     --r-sm: 10px;
@@ -49,35 +49,66 @@
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+
+/* ============================================================
+   RESET
+============================================================ */
+
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     min-height: 100%;
 }
 
 body {
-    background: var(--void) url('bg.svg') center / cover no-repeat fixed;
+    background:
+        var(--void) url('bg.svg')
+        center / cover no-repeat fixed;
+
     color: var(--ink);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    font-family:
+        'Inter',
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
     line-height: 1.55;
+
     min-height: 100vh;
+
     position: relative;
+
+    overflow-x: hidden;
 }
 
-/* fine film-grain texture over the whole page for a cinematic, non-flat backdrop */
+
+/* ============================================================
+   FILM GRAIN
+============================================================ */
+
 body::before {
     content: "";
+
     position: fixed;
+
     inset: 0;
+
     z-index: 0;
+
     pointer-events: none;
+
     opacity: 0.05;
+
     mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+    background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 body > * {
@@ -85,28 +116,71 @@ body > * {
     z-index: 1;
 }
 
+
+/* ============================================================
+   SELECTION
+============================================================ */
+
 ::selection {
     background: var(--accent-glow);
     color: #fff;
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--void); }
-::-webkit-scrollbar-thumb { background: var(--elevated); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-deep); }
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--void);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--elevated);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-deep);
+}
+
+
+/* ============================================================
+   HEADING
+============================================================ */
 
 h1 {
     font-family: 'Manrope', sans-serif;
+
     font-weight: 800;
+
     font-size: clamp(1.9rem, 4vw, 2.7rem);
+
     text-align: center;
+
     letter-spacing: -0.02em;
+
     margin: 3rem auto 0.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, var(--accent-soft) 100%);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            var(--accent-soft) 100%
+        );
+
     -webkit-background-clip: text;
     background-clip: text;
+
     color: transparent;
+
     width: fit-content;
+
+    max-width: 94%;
 }
 
 body:has(#movie-form) h1,
@@ -120,483 +194,1405 @@ a {
     text-decoration: none;
 }
 
+
 /* ============================================================
-   HOME — search
-   ============================================================ */
+   HOME PAGE
+============================================================ */
 
 body:has(#movie-form) {
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     min-height: 100vh;
 }
 
+
+/* ============================================================
+   SEARCH HERO
+============================================================ */
+
 body:has(#movie-form) > div:first-of-type {
     width: 100%;
+
     min-height: 62vh;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     padding: 2rem 1.25rem;
-    transition: min-height 0.4s var(--ease), padding 0.4s var(--ease);
+
+    transition:
+        min-height 0.4s var(--ease),
+        padding 0.4s var(--ease);
 }
 
-/* once results, a loader, or an error message exist, shrink the hero
-   so the search bar sits near the top and the cards fill the rest of the page */
+
 body:has(#movie-hub > *) > div:first-of-type {
     min-height: 0;
-    padding: 2.5rem 1.25rem 1.75rem;
+
+    padding:
+        2.5rem
+        1.25rem
+        1.75rem;
 }
+
+
+/* ============================================================
+   SEARCH FORM
+============================================================ */
 
 #movie-form {
     position: relative;
+
     display: flex;
+
     align-items: center;
+
     gap: 0.5rem;
+
     width: min(640px, 92vw);
+
     padding: 10px;
+
     border-radius: 999px;
+
     border: 2px solid transparent;
+
     background:
-        linear-gradient(180deg, rgba(22, 20, 22, 0.94), rgba(10, 10, 10, 0.94)) padding-box,
-        conic-gradient(from var(--angle, 0deg), var(--accent-deep), var(--accent), #ff8a91, var(--accent), var(--accent-deep)) border-box;
+        linear-gradient(
+            180deg,
+            rgba(22, 20, 22, 0.94),
+            rgba(10, 10, 10, 0.94)
+        ) padding-box,
+
+        conic-gradient(
+            from var(--angle, 0deg),
+            var(--accent-deep),
+            var(--accent),
+            #ff8a91,
+            var(--accent),
+            var(--accent-deep)
+        ) border-box;
+
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.6),
         0 0 0 1px rgba(229, 9, 20, 0.05) inset;
+
     isolation: isolate;
+
     animation: rotate 5s linear infinite;
 }
 
+
 #movie-form::after {
     content: "";
+
     position: absolute;
+
     inset: -20px;
+
     border-radius: 999px;
-    background: radial-gradient(ellipse at center, var(--accent-glow), transparent 70%);
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            var(--accent-glow),
+            transparent 70%
+        );
+
     z-index: -2;
+
     opacity: 0.55;
-    animation: breathe 2.6s ease-in-out infinite;
+
+    animation:
+        breathe 2.6s ease-in-out infinite;
 }
+
 
 @property --angle {
     syntax: '<angle>';
+
     initial-value: 0deg;
+
     inherits: false;
 }
 
-@keyframes rotate { to { --angle: 360deg; } }
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
 
 @keyframes breathe {
-    0%, 100% { opacity: 0.4; transform: scale(0.97); }
-    50%      { opacity: 0.75; transform: scale(1.04); }
+
+    0%,
+    100% {
+        opacity: 0.4;
+
+        transform: scale(0.97);
+    }
+
+    50% {
+        opacity: 0.75;
+
+        transform: scale(1.04);
+    }
 }
+
+
+/* ============================================================
+   SEARCH INPUT
+============================================================ */
 
 #movie-input {
     flex: 1;
+
+    min-width: 0;
+
     background: transparent;
+
     border: none;
+
     outline: none;
+
     -webkit-appearance: none;
+
     appearance: none;
+
     color: var(--ink);
+
     font-family: 'Inter', sans-serif;
+
     font-size: 1.05rem;
-    padding: 1rem 0.5rem 1rem 1.5rem;
+
+    padding:
+        1rem
+        0.5rem
+        1rem
+        1.5rem;
 }
 
-#movie-input::placeholder { color: var(--ink-mute); }
 
-/* Chrome/Edge/Safari autofill paints its own light background via an inset
-   box-shadow that ignores `background`, so it has to be overridden the same way */
+#movie-input::placeholder {
+    color: var(--ink-mute);
+}
+
+
+/* ============================================================
+   AUTOFILL
+============================================================ */
+
 #movie-input:-webkit-autofill,
 #movie-input:-webkit-autofill:hover,
 #movie-input:-webkit-autofill:focus,
 #movie-input:-webkit-autofill:active {
     -webkit-text-fill-color: var(--ink);
+
     caret-color: var(--ink);
-    -webkit-box-shadow: 0 0 0px 1000px var(--surface) inset;
-    box-shadow: 0 0 0px 1000px var(--surface) inset;
-    transition: background-color 9999s ease-in-out 0s;
+
+    -webkit-box-shadow:
+        0 0 0px 1000px var(--surface) inset;
+
+    box-shadow:
+        0 0 0px 1000px var(--surface) inset;
+
+    transition:
+        background-color 9999s ease-in-out 0s;
 }
 
 #movie-input:autofill {
     -webkit-text-fill-color: var(--ink);
+
     caret-color: var(--ink);
-    box-shadow: 0 0 0px 1000px var(--surface) inset;
+
+    box-shadow:
+        0 0 0px 1000px var(--surface) inset;
 }
+
+
+/* ============================================================
+   SEARCH BUTTON
+============================================================ */
 
 #movie-form button {
     flex-shrink: 0;
+
     border: none;
+
     cursor: pointer;
-    padding: 0.9rem 2rem;
+
+    padding:
+        0.9rem
+        2rem;
+
     border-radius: 999px;
+
     font-family: 'Manrope', sans-serif;
+
     font-weight: 700;
+
     font-size: 0.92rem;
+
     letter-spacing: 0.02em;
+
     color: #ffffff;
-    background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-    box-shadow: 0 8px 24px var(--accent-glow);
-    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), filter 0.25s var(--ease);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent-soft),
+            var(--accent)
+        );
+
+    box-shadow:
+        0 8px 24px var(--accent-glow);
+
+    transition:
+        transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease),
+        filter 0.25s var(--ease);
+
     text-transform: capitalize;
 }
 
+
 #movie-form button:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 12px 32px var(--accent-glow);
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 12px 32px var(--accent-glow);
+
     filter: brightness(1.08);
 }
 
-#movie-form button:active { transform: translateY(0) scale(0.98); }
+
+#movie-form button:active {
+    transform:
+        translateY(0)
+        scale(0.98);
+}
+
 
 /* ============================================================
-   HOME — results
-   ============================================================ */
+   MOVIE GRID
+============================================================ */
 
 #movie-hub {
     width: min(1300px, 94vw);
+
     margin: 0 auto 4rem;
+
     flex: 1;
+
     align-content: start;
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(240px, 1fr)
+        );
+
     gap: 2rem;
 }
 
-/* while loading or on an empty/error state, collapse the grid and center the content */
+
 #movie-hub:has(> .loader),
 #movie-hub:has(> p:only-child) {
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     min-height: 46vh;
 }
 
+
 #movie-hub > p {
     color: var(--ink-soft);
+
     font-size: 1rem;
+
     text-align: center;
 }
 
+
+/* ============================================================
+   MOVIE CARD
+============================================================ */
+
 .movie-card {
-    background: linear-gradient(180deg, var(--card), var(--surface));
-    border: 1px solid var(--line-soft);
+    background:
+        linear-gradient(
+            180deg,
+            var(--card),
+            var(--surface)
+        );
+
+    border:
+        1px solid
+        var(--line-soft);
+
     border-radius: var(--r-md);
+
     overflow: hidden;
+
     cursor: pointer;
-    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+
+    transition:
+        transform 0.3s var(--ease),
+        border-color 0.3s var(--ease),
+        box-shadow 0.3s var(--ease);
 }
+
 
 .movie-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(229, 9, 20, 0.45);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent-glow);
+
+    border-color:
+        rgba(229, 9, 20, 0.45);
+
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px var(--accent-glow);
 }
+
 
 .movie-card > div:first-child {
     aspect-ratio: 2 / 3;
+
     overflow: hidden;
+
     background: var(--elevated);
 }
 
+
 .movie-card img {
     width: 100%;
+
     height: 100%;
+
     object-fit: cover;
+
     display: block;
-    transition: transform 0.4s var(--ease);
+
+    transition:
+        transform 0.4s var(--ease);
 }
 
-.movie-card:hover img { transform: scale(1.06); }
+
+.movie-card:hover img {
+    transform: scale(1.06);
+}
+
 
 .movie-card > div:last-child {
-    padding: 1.1rem 1.25rem 1.35rem;
+    padding:
+        1.1rem
+        1.25rem
+        1.35rem;
 }
+
 
 .movie-card p {
     margin: 0;
 }
 
+
 .movie-card p:first-child {
     font-family: 'Manrope', sans-serif;
+
     font-weight: 700;
+
     font-size: 1.1rem;
+
     color: var(--ink);
+
     margin-bottom: 0.3rem;
 }
 
+
 .movie-card p:last-child {
     color: var(--ink-mute);
+
     font-size: 0.92rem;
 }
+
 
 /* ============================================================
    DETAILS PAGE
-   ============================================================ */
+============================================================ */
 
 body:has(#back-home) {
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 }
+
+
+/* ============================================================
+   BACK HOME
+============================================================ */
 
 #back-home {
     display: inline-flex;
+
     align-items: center;
+
     gap: 0.4rem;
+
     align-self: flex-start;
-    margin: 2rem 0 0 clamp(1rem, 4vw, 3rem);
-    padding: 0.55rem 1.2rem;
+
+    margin:
+        2rem
+        0
+        0
+        clamp(1rem, 4vw, 3rem);
+
+    padding:
+        0.55rem
+        1.2rem;
+
     border-radius: 999px;
-    border: 1px solid var(--line);
+
+    border:
+        1px solid
+        var(--line);
+
     background: var(--surface);
+
     color: var(--ink-soft);
+
     font-size: 0.86rem;
+
     font-weight: 500;
-    transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+
+    transition:
+        color 0.25s var(--ease),
+        border-color 0.25s var(--ease),
+        background 0.25s var(--ease);
 }
+
 
 #back-home:hover {
     color: var(--accent-soft);
+
     border-color: var(--accent-deep);
+
     background: var(--elevated);
 }
+
+
+/* ============================================================
+   DETAILS CONTAINER
+============================================================ */
 
 #movie-detail {
     width: min(1000px, 94vw);
-    margin: 2rem auto 5rem;
+
+    margin:
+        2rem
+        auto
+        5rem;
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 2.5rem;
-    background: linear-gradient(180deg, var(--card), var(--surface));
-    border: 1px solid var(--line-soft);
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--card),
+            var(--surface)
+        );
+
+    border:
+        1px solid
+        var(--line-soft);
+
     border-radius: var(--r-lg);
+
     padding: 2rem;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.5);
+
     position: relative;
 }
 
-/* loading state inside the details container */
+
+/* ============================================================
+   DETAILS LOADING
+============================================================ */
+
 #movie-detail:has(> .loader) {
     min-height: 60vh;
+
     align-items: center;
+
     justify-content: center;
 }
 
-/* poster — first direct child div */
+
+/* ============================================================
+   POSTER
+============================================================ */
+
 #movie-detail > div:first-child {
-    flex: 0 0 300px;
+    flex:
+        0 0
+        300px;
+
+    width: 300px;
+
     border-radius: var(--r-md);
+
     overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    align-self: start;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.5);
+
+    align-self: flex-start;
 }
+
 
 #movie-detail > div:first-child img {
     width: 100%;
-    height: 100%;
+
+    height: auto;
+
+    aspect-ratio: 2 / 3;
+
     object-fit: cover;
+
     display: block;
 }
 
-/* info column — second direct child div */
+
+/* ============================================================
+   INFORMATION COLUMN
+============================================================ */
+
 #movie-detail > div:nth-child(2) {
-    flex: 1 1 380px;
+    flex:
+        1 1
+        380px;
+
     min-width: 0;
+
     display: flex;
+
     flex-direction: column;
+
     gap: 1.15rem;
 }
 
+
+/* ============================================================
+   MOVIE TITLE
+============================================================ */
+
 #movie-detail h2 {
     font-family: 'Manrope', sans-serif;
+
     font-size: 1.85rem;
+
     font-weight: 800;
+
     margin: 0;
+
     color: var(--ink);
+
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
 }
 
-/* meta pill row: released / rated / runtime / genre / imdb rating */
+
+/* ============================================================
+   META
+============================================================ */
+
 #movie-detail > div:nth-child(2) > div:nth-of-type(1) {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 0.55rem;
 }
 
+
 #movie-detail > div:nth-child(2) > div:nth-of-type(1) p {
     margin: 0;
-    padding: 0.35rem 0.85rem;
+
+    padding:
+        0.35rem
+        0.85rem;
+
     background: var(--elevated);
-    border: 1px solid var(--line);
+
+    border:
+        1px solid
+        var(--line);
+
     border-radius: 999px;
+
     font-size: 0.8rem;
+
     color: var(--ink-soft);
+
+    white-space: normal;
 }
 
-/* plot block */
+
+/* ============================================================
+   PLOT
+============================================================ */
+
 #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:first-child {
     font-family: 'Manrope', sans-serif;
+
     font-weight: 700;
+
     font-size: 0.92rem;
+
     color: var(--accent-soft);
-    margin: 0 0 0.4rem;
+
+    margin:
+        0
+        0
+        0.4rem;
 }
+
 
 #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:last-child {
     margin: 0;
+
     color: var(--ink-soft);
+
     line-height: 1.75;
+
+    overflow-wrap: anywhere;
 }
 
-/* director / writer and language / country rows (contain <section>) */
+
+/* ============================================================
+   DIRECTOR / WRITER / LANGUAGE / COUNTRY
+============================================================ */
+
 #movie-detail > div:nth-child(2) > div:has(> section) {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 2rem;
+
     padding-top: 0.9rem;
-    border-top: 1px solid var(--line-soft);
+
+    border-top:
+        1px solid
+        var(--line-soft);
 }
+
 
 #movie-detail section {
     flex: 1;
+
     min-width: 140px;
+
+    min-width: 0;
 }
 
-/* actors row (no <section>, just two direct <p>) */
-#movie-detail > div:nth-child(2) > div:not(:has(> section)):nth-of-type(3) {
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--line-soft);
-}
 
 #movie-detail section p:first-child,
 #movie-detail > div:nth-child(2) > div:nth-of-type(3) > p:first-child {
-    margin: 0 0 0.25rem;
+    margin:
+        0
+        0
+        0.25rem;
+
     font-size: 0.75rem;
+
     text-transform: uppercase;
+
     letter-spacing: 0.06em;
+
     color: var(--ink-mute);
 }
+
 
 #movie-detail section p:last-child,
 #movie-detail > div:nth-child(2) > div:nth-of-type(3) > p:last-child {
     margin: 0;
+
     color: var(--ink-soft);
+
     font-size: 0.92rem;
+
+    overflow-wrap: anywhere;
 }
 
-/* IMDb button — direct child of #movie-detail, rendered after the two info divs,
-   visually anchored to sit under the text column, at the bottom of the card */
+
+/* ============================================================
+   ACTORS
+============================================================ */
+
+#movie-detail > div:nth-child(2) > div:not(:has(> section)):nth-of-type(3) {
+    padding-top: 0.9rem;
+
+    border-top:
+        1px solid
+        var(--line-soft);
+}
+
+
+/* ============================================================
+   IMDb BUTTON
+============================================================ */
+
 #movie-detail > button {
     order: 3;
+
     flex-basis: 100%;
-    margin: 0.25rem 0 0 calc(300px + 2.5rem);
+
+    margin:
+        0.25rem
+        0
+        0
+        calc(300px + 2.5rem);
+
     align-self: flex-start;
+
     border: none;
+
     cursor: pointer;
-    padding: 0.85rem 1.8rem;
+
+    padding:
+        0.85rem
+        1.8rem;
+
     border-radius: var(--r-sm);
-    background: linear-gradient(135deg, var(--imdb), #ffdd55);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--imdb),
+            #ffdd55
+        );
+
     color: var(--imdb-ink);
+
     font-family: 'Manrope', sans-serif;
+
     font-weight: 800;
+
     font-size: 0.9rem;
-    box-shadow: 0 10px 26px rgba(245, 197, 24, 0.25);
-    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+
+    box-shadow:
+        0 10px 26px
+        rgba(245, 197, 24, 0.25);
+
+    transition:
+        transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease);
+
     width: fit-content;
 }
 
+
 #movie-detail > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 34px rgba(245, 197, 24, 0.38);
+
+    box-shadow:
+        0 14px 34px
+        rgba(245, 197, 24, 0.38);
 }
+
 
 #movie-detail > button a {
     color: inherit;
+
     font-weight: inherit;
 }
 
+
 /* ============================================================
-   LOADER — <div class="loader"></div>, centers itself wherever it lands
-   ============================================================ */
+   LOADER
+============================================================ */
 
 .loader {
     width: 56px;
+
     aspect-ratio: 1;
+
     padding: 6px;
+
     border-radius: 50%;
-    background: conic-gradient(from 0deg, var(--accent-deep), var(--accent), #ff8a91, var(--accent), var(--accent-deep));
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
-    animation: rotate 0.9s linear infinite;
-    filter: drop-shadow(0 0 10px var(--accent-glow));
+
+    background:
+        conic-gradient(
+            from 0deg,
+            var(--accent-deep),
+            var(--accent),
+            #ff8a91,
+            var(--accent),
+            var(--accent-deep)
+        );
+
+    -webkit-mask:
+        radial-gradient(
+            farthest-side,
+            transparent calc(100% - 7px),
+            #000 calc(100% - 6px)
+        );
+
+    mask:
+        radial-gradient(
+            farthest-side,
+            transparent calc(100% - 7px),
+            #000 calc(100% - 6px)
+        );
+
+    animation:
+        rotate 0.9s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            var(--accent-glow)
+        );
 }
 
-@media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
-}
 
 /* ============================================================
-   RESPONSIVE
-   ============================================================ */
+   TABLET
+============================================================ */
 
 @media (max-width: 900px) {
-    #movie-detail > div:first-child { flex-basis: 260px; }
-    #movie-detail > div:nth-child(2) { flex-basis: 300px; }
-    #movie-detail > button { margin-left: calc(260px + 2.5rem); }
+
+    #movie-detail {
+        width: 94vw;
+
+        gap: 2rem;
+    }
+
+    #movie-detail > div:first-child {
+        flex-basis: 250px;
+
+        width: 250px;
+    }
+
+    #movie-detail > div:nth-child(2) {
+        flex-basis: 300px;
+    }
+
+    #movie-detail > button {
+        margin-left:
+            calc(250px + 2rem);
+    }
 }
+
+
+/* ============================================================
+   MOBILE — 720px
+============================================================ */
 
 @media (max-width: 720px) {
-    h1 { margin-top: 2.25rem; }
 
-    #movie-detail { flex-direction: column; padding: 1.5rem; gap: 1.75rem; }
-    #movie-detail > div:first-child { flex: none; width: 100%; max-width: 260px; margin: 0 auto; }
-    #movie-detail > div:nth-child(2) { flex-basis: auto; }
-    #movie-detail > button { margin: 0.25rem auto 0; align-self: center; }
-
-    #back-home { margin-left: 1.25rem; }
-}
-
-@media (max-width: 640px) {
-    body:has(#movie-form) > div:first-of-type { min-height: 50vh; padding: 1.5rem 1rem; }
-
-    #movie-form { width: 94vw; padding: 8px; }
-
-    #movie-input {
-        font-size: 0.95rem;
-        padding: 0.85rem 0.4rem 0.85rem 1.1rem;
+    h1 {
+        margin-top: 2.25rem;
     }
 
-    #movie-form button {
-        padding: 0.75rem 1.3rem;
-        font-size: 0.85rem;
-    }
 
-    #movie-hub {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1.25rem;
+    /* Details card */
+
+    #movie-detail {
+        width: 92vw;
+
+        flex-direction: column;
+
+        flex-wrap: nowrap;
+
+        padding: 1.25rem;
+
+        gap: 1.75rem;
+
+        margin-top: 1.5rem;
+
         margin-bottom: 3rem;
+
+        border-radius: 18px;
     }
 
-    .movie-card p:first-child { font-size: 0.95rem; }
-    .movie-card p:last-child { font-size: 0.8rem; }
 
-    #movie-detail h2 { font-size: 1.5rem; }
-    #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:last-child { line-height: 1.6; }
-}
+    /* Poster */
 
-@media (max-width: 420px) {
-    h1 { font-size: 1.6rem; margin-top: 1.75rem; }
+    #movie-detail > div:first-child {
+        flex: none;
 
-    #movie-form { flex-wrap: wrap; border-radius: var(--r-lg); }
-    #movie-input { width: 100%; padding: 0.8rem 0.5rem 0.5rem 1rem; }
-    #movie-form button { width: 100%; margin: 0 0.3rem 0.3rem; }
+        width: min(75vw, 280px);
 
-    #movie-hub {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        max-width: 280px;
+
+        margin: 0 auto;
+
+        align-self: center;
+    }
+
+
+    #movie-detail > div:first-child img {
+        width: 100%;
+
+        height: auto;
+
+        aspect-ratio: 2 / 3;
+
+        object-fit: cover;
+    }
+
+
+    /* Information */
+
+    #movie-detail > div:nth-child(2) {
+        width: 100%;
+
+        flex: none;
+
         gap: 1rem;
     }
 
-    #movie-detail { padding: 1.1rem; }
-    #back-home { margin-left: 1rem; font-size: 0.8rem; padding: 0.45rem 1rem; }
+
+    /* Title */
+
+    #movie-detail h2 {
+        font-size: clamp(1.45rem, 6vw, 1.8rem);
+
+        line-height: 1.25;
+
+        text-align: left;
+    }
+
+
+    /* Meta */
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(1) {
+        gap: 0.45rem;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(1) p {
+        padding:
+            0.3rem
+            0.65rem;
+
+        font-size: 0.72rem;
+
+        line-height: 1.4;
+    }
+
+
+    /* Plot */
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:last-child {
+        font-size: 0.9rem;
+
+        line-height: 1.65;
+    }
+
+
+    /* Director / Writer etc. */
+
+    #movie-detail > div:nth-child(2) > div:has(> section) {
+        gap: 1rem;
+
+        padding-top: 1rem;
+    }
+
+
+    #movie-detail section {
+        width: 100%;
+
+        flex:
+            1 1
+            100%;
+    }
+
+
+    /* Actors */
+
+    #movie-detail > div:nth-child(2) > div:not(:has(> section)):nth-of-type(3) {
+        padding-top: 1rem;
+    }
+
+
+    #movie-detail section p:last-child,
+    #movie-detail > div:nth-child(2) > div:nth-of-type(3) > p:last-child {
+        font-size: 0.88rem;
+
+        line-height: 1.55;
+    }
+
+
+    /* IMDb */
+
+    #movie-detail > button {
+        order: 3;
+
+        flex-basis: auto;
+
+        width: 100%;
+
+        margin:
+            0.25rem
+            0
+            0;
+
+        align-self: stretch;
+
+        padding:
+            0.9rem
+            1rem;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* Back button */
+
+    #back-home {
+        margin-left: 1rem;
+
+        margin-top: 1.25rem;
+    }
+}
+
+
+/* ============================================================
+   MOBILE — 640px
+============================================================ */
+
+@media (max-width: 640px) {
+
+    /* Home hero */
+
+    body:has(#movie-form) > div:first-of-type {
+        min-height: 50vh;
+
+        padding:
+            1.5rem
+            1rem;
+    }
+
+
+    /* Search */
+
+    #movie-form {
+        width: 94vw;
+
+        padding: 7px;
+
+        gap: 0.35rem;
+    }
+
+
+    #movie-input {
+        min-width: 0;
+
+        font-size: 0.92rem;
+
+        padding:
+            0.85rem
+            0.4rem
+            0.85rem
+            1rem;
+    }
+
+
+    #movie-form button {
+        padding:
+            0.75rem
+            1.25rem;
+
+        font-size: 0.82rem;
+    }
+
+
+    /* Movie grid */
+
+    #movie-hub {
+        width: 94vw;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 1rem;
+    }
+
+
+    .movie-card > div:last-child {
+        padding:
+            0.9rem
+            0.85rem
+            1rem;
+    }
+
+
+    .movie-card p:first-child {
+        font-size: 0.92rem;
+    }
+
+
+    .movie-card p:last-child {
+        font-size: 0.78rem;
+    }
+}
+
+
+/* ============================================================
+   SMALL MOBILE — 480px
+============================================================ */
+
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 1.7rem;
+
+        margin-top: 1.75rem;
+    }
+
+
+    /* Search becomes vertical */
+
+    #movie-form {
+        flex-direction: column;
+
+        border-radius: 18px;
+
+        padding: 8px;
+    }
+
+
+    #movie-input {
+        width: 100%;
+
+        height: 50px;
+
+        padding:
+            0.75rem
+            0.9rem;
+    }
+
+
+    #movie-form button {
+        width: 100%;
+
+        height: 48px;
+
+        margin: 0;
+
+        border-radius: 12px;
+    }
+
+
+    /* Movie grid */
+
+    #movie-hub {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 0.8rem;
+    }
+
+
+    .movie-card {
+        border-radius: 12px;
+    }
+
+
+    .movie-card > div:last-child {
+        padding:
+            0.75rem;
+    }
+
+
+    .movie-card p:first-child {
+        font-size: 0.85rem;
+
+        line-height: 1.35;
+    }
+
+
+    .movie-card p:last-child {
+        font-size: 0.72rem;
+    }
+
+
+    /* Details */
+
+    #movie-detail {
+        width: 94vw;
+
+        padding: 1rem;
+
+        gap: 1.4rem;
+
+        border-radius: 16px;
+    }
+
+
+    #movie-detail > div:first-child {
+        width: min(70vw, 250px);
+
+        max-width: 250px;
+    }
+
+
+    #movie-detail h2 {
+        font-size: 1.4rem;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(1) p {
+        font-size: 0.68rem;
+
+        padding:
+            0.28rem
+            0.55rem;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:last-child {
+        font-size: 0.86rem;
+
+        line-height: 1.6;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:has(> section) {
+        gap: 0.9rem;
+    }
+
+
+    #movie-detail section p:last-child,
+    #movie-detail > div:nth-child(2) > div:nth-of-type(3) > p:last-child {
+        font-size: 0.84rem;
+    }
+
+
+    #movie-detail > button {
+        font-size: 0.85rem;
+
+        padding:
+            0.85rem
+            1rem;
+    }
+}
+
+
+/* ============================================================
+   VERY SMALL PHONES — 360px
+============================================================ */
+
+@media (max-width: 360px) {
+
+    h1 {
+        font-size: 1.45rem;
+    }
+
+
+    #movie-hub {
+        width: 94vw;
+
+        gap: 0.7rem;
+    }
+
+
+    .movie-card > div:last-child {
+        padding: 0.65rem;
+    }
+
+
+    .movie-card p:first-child {
+        font-size: 0.78rem;
+    }
+
+
+    .movie-card p:last-child {
+        font-size: 0.68rem;
+    }
+
+
+    #movie-detail {
+        padding: 0.85rem;
+
+        gap: 1.2rem;
+    }
+
+
+    #movie-detail > div:first-child {
+        width: min(68vw, 220px);
+
+        max-width: 220px;
+    }
+
+
+    #movie-detail h2 {
+        font-size: 1.25rem;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(1) p {
+        font-size: 0.63rem;
+    }
+
+
+    #movie-detail > div:nth-child(2) > div:nth-of-type(2) p:last-child {
+        font-size: 0.82rem;
+    }
+
+
+    #movie-detail section p:last-child,
+    #movie-detail > div:nth-child(2) > div:nth-of-type(3) > p:last-child {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.001ms !important;
+    }
 }
